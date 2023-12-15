@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://nmixbobefupf"]
+
+[ext_resource type="Texture2D" uid="uid://dbrdwc7e8wnm" path="res://assets/characters/DirectionIndicator.png" id="1_5jk3p"]
+[ext_resource type="Script" path="res://objects/direction_indicator/direction_indicator.gd" id="1_70jwu"]
+
+[node name="DirectionIndicator" type="Node2D"]
+script = ExtResource("1_70jwu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5jk3p")
+hframes = 8

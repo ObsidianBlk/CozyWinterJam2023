@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba741r685ojqy"]
+
+[ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_8wcvi"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8wcvi")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 216.0
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+
+[node name="Center" type="CenterContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="MenuBox" type="VBoxContainer" parent="Margin/Center"]
+layout_mode = 2
+
+[node name="Titlebar" type="PanelContainer" parent="Margin/Center/MenuBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/Center/MenuBox/Titlebar"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Options" type="VBoxContainer" parent="Margin/Center/MenuBox"]
+layout_mode = 2
+
+[node name="BTN_Start" type="Button" parent="Margin/Center/MenuBox/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start"
+
+[node name="BTN_Options" type="Button" parent="Margin/Center/MenuBox/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Options"
+
+[node name="BTN_Quit" type="Button" parent="Margin/Center/MenuBox/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Start" to="." method="_on_btn_start_pressed"]
+[connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Options" to="." method="_on_btn_options_pressed"]
+[connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Quit" to="." method="_on_btn_quit_pressed"]

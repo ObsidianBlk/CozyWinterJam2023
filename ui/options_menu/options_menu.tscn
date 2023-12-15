@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfi8oitis5uhb"]
+
+[ext_resource type="Script" path="res://ui/options_menu/options_menu.gd" id="1_ddl7b"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ddl7b")
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+
+[node name="CC" type="CenterContainer" parent="MC"]
+layout_mode = 2
+
+[node name="Layout" type="VBoxContainer" parent="MC/CC"]
+layout_mode = 2
+
+[node name="Titlebar" type="PanelContainer" parent="MC/CC/Layout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MC/CC/Layout/Titlebar"]
+layout_mode = 2
+text = "Options Menu"
+
+[node name="VolumeControls" type="VBoxContainer" parent="MC/CC/Layout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MC/CC/Layout/VolumeControls"]
+layout_mode = 2
+text = "Volume"
+
+[node name="GridContainer" type="GridContainer" parent="MC/CC/Layout/VolumeControls"]
+layout_mode = 2
+columns = 2
+
+[node name="LBL_MasterVolume" type="Label" parent="MC/CC/Layout/VolumeControls/GridContainer"]
+layout_mode = 2
+text = "Master: "
+
+[node name="SPIN_MasterVolume" type="SpinBox" parent="MC/CC/Layout/VolumeControls/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LBL_MusicVolume" type="Label" parent="MC/CC/Layout/VolumeControls/GridContainer"]
+layout_mode = 2
+text = "Music:"
+
+[node name="SPIN_MusicVolume" type="SpinBox" parent="MC/CC/Layout/VolumeControls/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LBL_SFXVolume" type="Label" parent="MC/CC/Layout/VolumeControls/GridContainer"]
+layout_mode = 2
+text = "SFX:"
+
+[node name="SPIN_SFXVolume" type="SpinBox" parent="MC/CC/Layout/VolumeControls/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MC/CC/Layout"]
+layout_mode = 2
+
+[node name="BTN_Back" type="Button" parent="MC/CC/Layout"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="MC/CC/Layout/BTN_Back" to="." method="_on_btn_back_pressed"]
