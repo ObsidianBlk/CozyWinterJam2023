@@ -24,6 +24,9 @@ func _ready() -> void:
 # ------------------------------------------------------------------------------
 func _on_btn_back_pressed():
 	request(&"close_ui")
+	
+func _on_btn_apply_pressed() -> void:
+	Settings.save()
 
 func _on_gas_volume_changed(bus_name : StringName, value : float) -> void:
 	match bus_name:
@@ -36,3 +39,6 @@ func _on_gas_volume_changed(bus_name : StringName, value : float) -> void:
 
 func _on_volume_value_changed(value : float, bus_name : StringName) -> void:
 	GAS.set_volume(bus_name, value / 100.0)
+
+
+

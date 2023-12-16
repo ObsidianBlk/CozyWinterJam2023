@@ -2,6 +2,11 @@ extends Node2D
 
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const INITIAL_MUSIC_TRACK : AudioStream = preload("res://assets/music/Christmas synths.ogg")
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export_category("World")
@@ -16,7 +21,18 @@ var _active_level : Level = null
 # Onready Variables
 # ------------------------------------------------------------------------------
 @onready var _ui : UIRoot = %UI
+@onready var _music_player: AudioStreamPlayer = %MusicPlayer
 
+
+# ------------------------------------------------------------------------------
+# Override Methods
+# ------------------------------------------------------------------------------
+func _ready() -> void:
+	if Settings.load() != OK:
+		Settings.request_reset()
+		Settings.save()
+	_music_player.stream = INITIAL_MUSIC_TRACK
+	_music_player.play()
 
 # ------------------------------------------------------------------------------
 # Private Methods

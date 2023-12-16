@@ -1,0 +1,59 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cnu0ol45rvqs"]
+
+[ext_resource type="Texture2D" uid="uid://dyswc65gm6b8e" path="res://assets/tilesets/Tilesheet.png" id="1_6kk7r"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5src"]
+texture = ExtResource("1_6kk7r")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -8)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, -8)
+0:1/0/custom_data_0 = 1
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, -8)
+0:2/0/custom_data_0 = 1
+1:1/0 = 0
+1:1/0/texture_origin = Vector2i(0, -8)
+1:1/0/custom_data_0 = 1
+2:1/0 = 0
+2:1/0/texture_origin = Vector2i(0, -8)
+2:1/0/custom_data_0 = 1
+3:1/0 = 0
+3:1/0/texture_origin = Vector2i(0, -8)
+3:1/0/custom_data_0 = 1
+4:1/0 = 0
+4:1/0/texture_origin = Vector2i(0, -8)
+4:1/0/custom_data_0 = 1
+5:1/0 = 0
+5:1/0/texture_origin = Vector2i(0, -8)
+5:1/0/custom_data_0 = 1
+6:1/0 = 0
+6:1/0/texture_origin = Vector2i(0, -8)
+6:1/0/custom_data_0 = 1
+7:1/0 = 0
+7:1/0/texture_origin = Vector2i(0, -8)
+7:1/0/custom_data_0 = 1
+8:1/0 = 0
+8:1/0/texture_origin = Vector2i(0, -8)
+8:1/0/custom_data_0 = 1
+9:1/0 = 0
+9:1/0/texture_origin = Vector2i(0, -8)
+9:1/0/custom_data_0 = 1
+10:1/0 = 0
+10:1/0/texture_origin = Vector2i(0, -8)
+10:1/0/custom_data_0 = 1
+11:1/0 = 0
+11:1/0/texture_origin = Vector2i(0, -8)
+11:1/0/custom_data_0 = 1
+12:1/0 = 0
+12:1/0/texture_origin = Vector2i(0, -8)
+12:1/0/custom_data_0 = 1
+
+[resource]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_m5src")

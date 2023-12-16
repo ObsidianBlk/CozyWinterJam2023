@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://3leekrvjngxx"]
+
+[ext_resource type="PackedScene" uid="uid://cvhk6gcq55j0y" path="res://objects/flag/flag.tscn" id="1_gw703"]
+[ext_resource type="Script" path="res://objects/score_zone/score_zone.gd" id="1_n1xyn"]
+
+[node name="ScoreZone" type="Node2D"]
+script = ExtResource("1_n1xyn")
+
+[node name="Flag1" parent="." instance=ExtResource("1_gw703")]
+
+[node name="Flag2" parent="." instance=ExtResource("1_gw703")]

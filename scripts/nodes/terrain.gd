@@ -1,63 +1,51 @@
-@tool
-extends Node2D
+extends Node
+class_name Terrain
+
+# ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
 
 
 # ------------------------------------------------------------------------------
-# Constants
+# Constants and ENUMs
 # ------------------------------------------------------------------------------
-const ARC_DEGREES : float = 45.0
-const HALF_ARC_DEGREES : float = 22.5
+
 
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
-@export_category("Direction Indicator")
-@export_range(0.0, 360.0) var degrees : float = 0.0:			set = set_degrees
-
-
-# ------------------------------------------------------------------------------
-# Onready Variables
-# ------------------------------------------------------------------------------
-@onready var _indicator = $Sprite2D
-
+@export_category("Terrain")
+@export var tilemap : TileMap = null
 
 # ------------------------------------------------------------------------------
-# Setters
+# Static Variables
 # ------------------------------------------------------------------------------
-func set_degrees(d : float) -> void:
-	if d < 0.0 or d > 360.0: return
-	degrees = d
-	_UpdateIndicator()
+static var _instance : Terrain = null
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
-	_UpdateIndicator()
+	_instance = self
 
 # ------------------------------------------------------------------------------
-# Private Methods
+# Public Static Methods
 # ------------------------------------------------------------------------------
-func _IsWithinArc(ang_deg : float, arc_deg : float) -> bool:
-	return ang_deg >= arc_deg - HALF_ARC_DEGREES and ang_deg < arc_deg + HALF_ARC_DEGREES
+static func Get_Tile_Data_At(position : Vector2) -> TileData:
+	if _instance == null: return null
+	if _instance.tilemap == null: return null
+	var map_pos : Vector2i = _instance.tilemap.local_to_map(position)
+	return _instance.tilemap.get_cell_tile_data(0, map_pos)
 
-func _GetFrameFromDeg(ang_deg : float) -> int:
-	for i in range(1, 8):
-		if _IsWithinArc(ang_deg, ARC_DEGREES * i):
-			return i
-	return 0
+static func Get_Custom_Data_At(position : Vector2, custom_data_name : String, default : Variant = null) -> Variant:
+	var data : TileData = Get_Tile_Data_At(position)
+	if data == null: return default
+	return data.get_custom_data(custom_data_name)
 
-func _UpdateIndicator() -> void:
-	if _indicator == null: return
-	_indicator.frame = _GetFrameFromDeg(degrees)
 
 # ------------------------------------------------------------------------------
-# Public Methods
+# Handler Methods
 # ------------------------------------------------------------------------------
-func get_angle() -> float:
-	if _indicator == null: return 0.0
-	return deg_to_rad(ARC_DEGREES * _indicator.frame)
 
-func normalize_angle(ang_deg : float) -> float:
-	ang_deg = wrapf(ang_deg, 0.0, 360.0)
-	return deg_to_rad(ARC_DEGREES * _GetFrameFromDeg(ang_deg))
+
+

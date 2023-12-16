@@ -69,8 +69,18 @@ layout_mode = 2
 [node name="HSeparator" type="HSeparator" parent="MC/CC/Layout"]
 layout_mode = 2
 
-[node name="BTN_Back" type="Button" parent="MC/CC/Layout"]
+[node name="Options" type="HBoxContainer" parent="MC/CC/Layout"]
 layout_mode = 2
+
+[node name="BTN_Apply" type="Button" parent="MC/CC/Layout/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Apply"
+
+[node name="BTN_Back" type="Button" parent="MC/CC/Layout/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Back"
 
-[connection signal="pressed" from="MC/CC/Layout/BTN_Back" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="MC/CC/Layout/Options/BTN_Apply" to="." method="_on_btn_apply_pressed"]
+[connection signal="pressed" from="MC/CC/Layout/Options/BTN_Back" to="." method="_on_btn_back_pressed"]

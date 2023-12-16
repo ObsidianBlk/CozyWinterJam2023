@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvhk6gcq55j0y"]
+
+[ext_resource type="Texture2D" uid="uid://dxdjkkohvwbrr" path="res://assets/items/flag.png" id="1_g0ian"]
+[ext_resource type="Shader" path="res://shaders/flag.gdshader" id="1_r288f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nablm"]
+shader = ExtResource("1_r288f")
+shader_parameter/region = Vector4(0, 0, 16, 16)
+shader_parameter/left_static_pixels = 6
+shader_parameter/right_static_pixels = 0
+shader_parameter/time_scale = 1.0
+shader_parameter/wave_scale = 0.1
+shader_parameter/atlas = ExtResource("1_g0ian")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b8k0t"]
+radius = 2.0
+
+[node name="Flag" type="StaticBody2D"]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 3
+material = SubResource("ShaderMaterial_nablm")
+texture = ExtResource("1_g0ian")
+centered = false
+offset = Vector2(-4, -14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_b8k0t")
