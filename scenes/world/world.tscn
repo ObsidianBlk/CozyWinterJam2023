@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://byoe72ybm3j3u"]
+[gd_scene load_steps=8 format=3 uid="uid://byoe72ybm3j3u"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_vcwy6"]
 [ext_resource type="Script" path="res://scripts/ui/ui_root.gd" id="3_5my7e"]
 [ext_resource type="PackedScene" uid="uid://ba741r685ojqy" path="res://ui/main_menu/main_menu.tscn" id="4_dls1b"]
 [ext_resource type="PackedScene" uid="uid://cfi8oitis5uhb" path="res://ui/options_menu/options_menu.tscn" id="4_ky2eb"]
 [ext_resource type="Shader" path="res://shaders/film_grain.gdshader" id="5_nx1y7"]
+[ext_resource type="PackedScene" uid="uid://ciqh05wk1wwnv" path="res://ui/hud/hud.tscn" id="6_rabh8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nm40y"]
 shader = ExtResource("5_nx1y7")
@@ -26,10 +27,6 @@ option_menu = &"OptionsMenu"
 
 [node name="OptionsMenu" parent="UI" instance=ExtResource("4_ky2eb")]
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-bus = &"Music"
-
 [node name="Effects" type="CanvasLayer" parent="."]
 layer = 10
 
@@ -40,5 +37,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameHUD" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="GameHUD" instance=ExtResource("6_rabh8")]
+unique_name_in_owner = true
+visible = false
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+bus = &"Music"
 
 [connection signal="requested" from="UI" to="." method="_on_requested"]

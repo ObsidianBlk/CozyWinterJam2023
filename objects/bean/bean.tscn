@@ -1,8 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh4yuy320vt0s"]
+[gd_scene load_steps=14 format=3 uid="uid://bh4yuy320vt0s"]
 
 [ext_resource type="Script" path="res://objects/bean/bean.gd" id="1_o4rbf"]
 [ext_resource type="Texture2D" uid="uid://d1yousay2ot04" path="res://assets/characters/Bean.png" id="1_qv3ya"]
 [ext_resource type="PackedScene" uid="uid://nmixbobefupf" path="res://objects/direction_indicator/direction_indicator.tscn" id="2_8fjli"]
+[ext_resource type="Script" path="res://scripts/nodes/AudioStreamLibrary.gd" id="4_8bd2g"]
+[ext_resource type="AudioStream" uid="uid://blvdm77uju2v5" path="res://assets/audio/SnowStep_01.wav" id="5_q2k6a"]
+[ext_resource type="AudioStream" uid="uid://vcxgym2pnnnh" path="res://assets/audio/SnowStep_02.wav" id="6_1njg3"]
+[ext_resource type="AudioStream" uid="uid://bvqfw06n4go1t" path="res://assets/audio/SnowStep_03.wav" id="7_t620s"]
+[ext_resource type="AudioStream" uid="uid://81k67ghr0via" path="res://assets/audio/IceSkate_01.wav" id="8_dcsj0"]
+[ext_resource type="AudioStream" uid="uid://c023erok0jhy5" path="res://assets/audio/IceSkate_02.wav" id="9_ei6w1"]
+[ext_resource type="AudioStream" uid="uid://buoj5hc2wcib4" path="res://assets/audio/IceSkate_03.wav" id="10_m2yyq"]
+[ext_resource type="AudioStream" uid="uid://dh1degqhcqfu3" path="res://assets/audio/IceSkate_04.wav" id="11_vlaus"]
+[ext_resource type="AudioStream" uid="uid://cwne0q8rgoxe2" path="res://assets/audio/IceSkate_05.wav" id="12_6cy01"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8j18"]
 radius = 4.0
@@ -10,13 +19,32 @@ radius = 4.0
 [node name="Bean" type="CharacterBody2D"]
 script = ExtResource("1_o4rbf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CircleShape2D_a8j18")
 
 [node name="DirectionIndicator" parent="." instance=ExtResource("2_8fjli")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 3
 texture = ExtResource("1_qv3ya")
 centered = false
 offset = Vector2(-15, -24)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+
+[node name="ASL_Step" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("4_8bd2g")
+player = NodePath("../AudioStreamPlayer2D")
+streams = Array[AudioStream]([ExtResource("5_q2k6a"), ExtResource("6_1njg3"), ExtResource("7_t620s")])
+volume_db = 10.0
+min_pitch = 0.8
+max_pitch = 1.2
+
+[node name="ASL_Skate" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("4_8bd2g")
+player = NodePath("../AudioStreamPlayer2D")
+streams = Array[AudioStream]([ExtResource("8_dcsj0"), ExtResource("9_ei6w1"), ExtResource("10_m2yyq"), ExtResource("11_vlaus"), ExtResource("12_6cy01")])
+min_pitch = 0.8
+max_pitch = 1.2

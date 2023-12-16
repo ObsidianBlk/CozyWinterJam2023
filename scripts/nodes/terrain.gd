@@ -42,6 +42,8 @@ static func Get_Custom_Data_At(position : Vector2, custom_data_name : String, de
 	if data == null: return default
 	return data.get_custom_data(custom_data_name)
 
+static func Has_Tile_At(position : Vector2) -> bool:
+	return Get_Tile_Data_At(position) != null
 
 # ------------------------------------------------------------------------------
 # Handler Methods

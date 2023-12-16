@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciqh05wk1wwnv"]
+
+[ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="1_q2yrt"]
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="2_7i7mr"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_q2yrt")
+script = ExtResource("2_7i7mr")
+
+[node name="HUDBar" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="LevelInfoBar" type="HBoxContainer" parent="HUDBar"]
+layout_mode = 2
+
+[node name="LevelNameMC" type="MarginContainer" parent="HUDBar/LevelInfoBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="NamePanel" type="PanelContainer" parent="HUDBar/LevelInfoBar/LevelNameMC"]
+layout_mode = 2
+theme_type_variation = &"HUDPanel"
+
+[node name="LBLLevelName" type="Label" parent="HUDBar/LevelInfoBar/LevelNameMC/NamePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HUDLabelSmall"
+text = "Some Spiffy Level Name"
+
+[node name="TimerMC" type="MarginContainer" parent="HUDBar/LevelInfoBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="TimerPanel" type="PanelContainer" parent="HUDBar/LevelInfoBar/TimerMC"]
+layout_mode = 2
+theme_type_variation = &"HUDPanel"
+
+[node name="LBLTimerValue" type="Label" parent="HUDBar/LevelInfoBar/TimerMC/TimerPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "xxx"
+
+[node name="RunStatusBar" type="HBoxContainer" parent="HUDBar"]
+layout_mode = 2
+
+[node name="ScoreMC" type="MarginContainer" parent="HUDBar/RunStatusBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="ScorePanel" type="PanelContainer" parent="HUDBar/RunStatusBar/ScoreMC"]
+layout_mode = 2
+theme_type_variation = &"HUDPanel"
+
+[node name="Layout" type="HBoxContainer" parent="HUDBar/RunStatusBar/ScoreMC/ScorePanel"]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUDBar/RunStatusBar/ScoreMC/ScorePanel/Layout"]
+layout_mode = 2
+theme_type_variation = &"HUDLabel"
+text = "Score: "
+
+[node name="LBLScoreValue" type="Label" parent="HUDBar/RunStatusBar/ScoreMC/ScorePanel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HUDValueLabel"
+text = "0"
