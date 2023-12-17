@@ -8,6 +8,7 @@ class_name Level
 signal score_changed(score : int)
 signal timer_changed(secs_remaining : int)
 signal level_name_changed(level_name : String)
+signal level_complete(score : int)
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -62,6 +63,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if _timer > 0.0:
 		_timer = max(0.0, _timer - delta)
+		if _timer <= 0.001:
+			_timer = 0.0
+			level_complete.emit(_score)
 
 # ------------------------------------------------------------------------------
 # Private Methods

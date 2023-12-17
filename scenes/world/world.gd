@@ -4,6 +4,8 @@ extends Node2D
 # ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
+const SCOREBOARD_RESOURCE_PATH : String = "user://scoreboard.res"
+
 const INITIAL_MUSIC_TRACK : AudioStream = preload("res://assets/music/Christmas synths.ogg")
 
 const BLUR_IN_SIZE : float = 10.0
@@ -20,6 +22,8 @@ const BLUR_OUT_SIZE : float = 0.0
 # ------------------------------------------------------------------------------
 var _active_level : Level = null
 var _transitioning : bool = false
+
+var _scoreboard : ScoreboardData = null
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -40,6 +44,7 @@ func _ready() -> void:
 	if Settings.load() != OK:
 		Settings.request_reset()
 		Settings.save()
+	_InitScoreboard()
 	_music_player.stream = INITIAL_MUSIC_TRACK
 	_music_player.play()
 
@@ -57,6 +62,22 @@ func _unhandled_input(event: InputEvent) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _InitScoreboard() -> void:
+	if not ResourceLoader.exists(SCOREBOARD_RESOURCE_PATH):
+		_scoreboard = ScoreboardData.new()
+		_SaveScoreboard()
+	else:
+		_scoreboard = ResourceLoader.load(SCOREBOARD_RESOURCE_PATH)
+		if _scoreboard == null:
+			printerr("ERROR: Failed to load scoreboard file!")
+			_scoreboard = ScoreboardData.new()
+			_SaveScoreboard()
+
+func _SaveScoreboard() -> void:
+	if _scoreboard == null: return
+	if ResourceSaver.save(_scoreboard, SCOREBOARD_RESOURCE_PATH) != OK:
+		printerr("ERROR: Failed to save scoreboard file!")
+
 func _DropActiveLevel() -> void:
 	if _active_level == null: return
 	if _active_level.level_name_changed.is_connected(_hud.set_level_name):
@@ -65,6 +86,8 @@ func _DropActiveLevel() -> void:
 		_active_level.score_changed.disconnect(_hud.set_score)
 	if _active_level.timer_changed.is_connected(_hud.set_sec_remaining):
 		_active_level.timer_changed.disconnect(_hud.set_sec_remaining)
+	if _active_level.level_complete.is_connected(_on_level_complete):
+		_active_level.level_complete.disconnect(_on_level_complete)
 	remove_child(_active_level)
 
 func _SwapActiveLevel(new_level : Level) -> void:
@@ -78,6 +101,8 @@ func _SwapActiveLevel(new_level : Level) -> void:
 			_active_level.score_changed.connect(_hud.set_score)
 		if not _active_level.timer_changed.is_connected(_hud.set_sec_remaining):
 			_active_level.timer_changed.connect(_hud.set_sec_remaining)
+		if not _active_level.level_complete.is_connected(_on_level_complete):
+			_active_level.level_complete.connect(_on_level_complete)
 
 func _LoadLevel(level_path : String) -> int:
 	var PackedLevel : PackedScene = load(level_path)
@@ -104,6 +129,7 @@ func _TransitionLevel(level_path : String) -> void:
 	await _BlurTo(BLUR_OUT_SIZE, 0.5)
 
 func _EndGame(ui_name : StringName) -> void:
+	print("End Game: ", _transitioning)
 	await _BlurTo(BLUR_IN_SIZE, 0.5)
 	await _BackgroundModulate(Color.WHITE, 0.5)
 	_DropActiveLevel()
@@ -138,6 +164,16 @@ func _BlurTo(size : float, duration : float) -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
+func _on_level_complete(score : int) -> void:
+	if _active_level == null: return
+	if score > 0:
+		var score_entry : ScoreboardEntry = ScoreboardEntry.new()
+		score_entry.level_name = _active_level.level_name
+		score_entry.player_name = "Player" # TODO: Change this, obviously!
+		score_entry.score = score
+		_scoreboard.add_entry(score_entry)
+		_SaveScoreboard()
+	_EndGame(&"MainMenu")
 
 func _on_requested(action : StringName, payload : Dictionary = {}):
 	if _transitioning: return

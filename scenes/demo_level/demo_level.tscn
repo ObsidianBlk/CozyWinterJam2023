@@ -10,7 +10,7 @@
 [node name="DemoLevel" type="Node2D"]
 script = ExtResource("1_vnf7m")
 level_name = "Test Level... For the Win"
-level_time_sec = 120
+level_time_sec = 15
 
 [node name="Terrain" type="Node" parent="." node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_3x1q7")
