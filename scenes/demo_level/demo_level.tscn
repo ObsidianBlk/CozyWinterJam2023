@@ -10,6 +10,7 @@
 [node name="DemoLevel" type="Node2D"]
 script = ExtResource("1_vnf7m")
 level_name = "Test Level... For the Win"
+level_time_sec = 120
 
 [node name="Terrain" type="Node" parent="." node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_3x1q7")
@@ -32,16 +33,16 @@ position = Vector2(255, -1)
 score = 1
 trigger_group = &"Player"
 
-[node name="Bean" parent="Node2D" groups=["Player"] instance=ExtResource("2_vf7ay")]
-
-[node name="Camera2D" type="Camera2D" parent="Node2D/Bean"]
-zoom = Vector2(2, 2)
-
 [node name="ScoreZone2" parent="Node2D" instance=ExtResource("4_6f6we")]
 position = Vector2(0, 91)
 angle = 72.0
 score = 10
 trigger_group = &"Player"
+
+[node name="Bean" parent="Node2D" groups=["Player"] instance=ExtResource("2_vf7ay")]
+
+[node name="Camera2D" type="Camera2D" parent="Node2D/Bean"]
+zoom = Vector2(2, 2)
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -59,3 +60,5 @@ stream = ExtResource("6_ej5lw")
 volume_db = -26.0
 autoplay = true
 bus = &"SFX"
+
+[connection signal="died" from="Node2D/Bean" to="." method="reset"]

@@ -19,7 +19,7 @@ const DIRECTION_THRESHOLD : float = 0.01
 const SURFACE_SNOW : int = 0
 const SURFACE_ICE : int = 1
 
-const FALL_ACCEL : float = 128.0
+const FALL_ACCEL : float = 16
 const FALL_DURATION : float = 1.0
 
 # ------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ var _facing : float = 0.0 # Facing is an internal rotation value (in degrees).
 var _push_facing : float = 0.0
 var _speed : float = 0.0
 
-var _fall_time : float = 0.0
+var _point_of_fall : Vector2 = Vector2.ZERO
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -72,14 +72,13 @@ func _unhandled_input(event : InputEvent) -> void:
 func _physics_process(delta : float) -> void:
 	match _state:
 		STATE.Falling:
-			_fall_time += delta
 			velocity += Vector2.DOWN * FALL_ACCEL
 			move_and_slide()
-			if _fall_time >= FALL_DURATION:
-				_fall_time = 0.0
+			if global_position.distance_to(_point_of_fall) >= 32.0:
 				_state = STATE.Grounded
 				velocity = Vector2.ZERO
 				global_position = _spawn_position
+				_collision.disabled = false
 				died.emit()
 		STATE.Jumping:
 			pass
@@ -88,6 +87,7 @@ func _physics_process(delta : float) -> void:
 				_state = STATE.Falling
 				velocity = Vector2.ZERO
 				_collision.disabled = true
+				_point_of_fall = global_position
 				_StopASL()
 				return
 			

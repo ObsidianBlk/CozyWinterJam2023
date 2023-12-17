@@ -20,6 +20,15 @@ func _ready() -> void:
 	_spin_sfx_volume.value_changed.connect(_on_volume_value_changed.bind(GAS.BUS_SFX))
 
 # ------------------------------------------------------------------------------
+# "Virtual" Methods
+# ------------------------------------------------------------------------------
+func _Pre_Visible_Change():
+	if visible == false:
+		var focus : Callable = func():
+			_spin_master_volume.grab_focus()
+		focus.call_deferred()
+
+# ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_btn_back_pressed():

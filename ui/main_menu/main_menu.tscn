@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://ba741r685ojqy"]
+[gd_scene load_steps=4 format=3 uid="uid://ba741r685ojqy"]
 
 [ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_8wcvi"]
+[ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="1_ynmq2"]
+[ext_resource type="FontFile" uid="uid://mvduuji1c2hr" path="res://assets/fonts/Wet Pet.otf" id="3_eq62r"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ynmq2")
 script = ExtResource("1_8wcvi")
 
 [node name="Margin" type="MarginContainer" parent="."]
@@ -24,12 +27,15 @@ layout_mode = 2
 
 [node name="MenuBox" type="VBoxContainer" parent="Margin/Center"]
 layout_mode = 2
+theme_override_constants/separation = 24
 
 [node name="Titlebar" type="PanelContainer" parent="Margin/Center/MenuBox"]
 layout_mode = 2
+theme_type_variation = &"TitlebarPanel"
 
 [node name="Label" type="Label" parent="Margin/Center/MenuBox/Titlebar"]
 layout_mode = 2
+theme_type_variation = &"TitlebarLabel"
 text = "Main Menu"
 
 [node name="Options" type="VBoxContainer" parent="Margin/Center/MenuBox"]
@@ -49,6 +55,37 @@ text = "Options"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
+
+[node name="LogoMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -190.5
+offset_right = 300.0
+offset_bottom = 190.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+
+[node name="Label" type="Label" parent="LogoMarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.764706, 0.835294, 0.780392, 1)
+theme_override_colors/font_shadow_color = Color(0.156863, 0.258824, 0.380392, 0.501961)
+theme_override_colors/font_outline_color = Color(0.329412, 0.729412, 0.823529, 1)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 24
+theme_override_fonts/font = ExtResource("3_eq62r")
+theme_override_font_sizes/font_size = 104
+text = "Skate
+- N -
+Score"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Start" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Options" to="." method="_on_btn_options_pressed"]

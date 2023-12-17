@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqc73274221lc"]
+
+[ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="1_oecj5"]
+[ext_resource type="Script" path="res://ui/pause_menu/pause_menu.gd" id="2_2f6wv"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oecj5")
+script = ExtResource("2_2f6wv")
+
+[node name="Centered" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBC" type="VBoxContainer" parent="Centered"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Titlebar" type="PanelContainer" parent="Centered/VBC"]
+layout_mode = 2
+theme_type_variation = &"TitlebarPanel"
+
+[node name="Label" type="Label" parent="Centered/VBC/Titlebar"]
+layout_mode = 2
+theme_type_variation = &"TitlebarLabel"
+text = "Pause Menu"
+horizontal_alignment = 1
+
+[node name="Options" type="VBoxContainer" parent="Centered/VBC"]
+layout_mode = 2
+
+[node name="BTNResume" type="Button" parent="Centered/VBC/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="BTNOptions" type="Button" parent="Centered/VBC/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Options"
+
+[node name="BTNQuitMain" type="Button" parent="Centered/VBC/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit to Main"
+
+[node name="BTNQuitDesktop" type="Button" parent="Centered/VBC/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit to Desktop"
+
+[connection signal="pressed" from="Centered/VBC/Options/BTNResume" to="." method="_on_btn_resume_pressed"]
+[connection signal="pressed" from="Centered/VBC/Options/BTNOptions" to="." method="_on_btn_options_pressed"]
+[connection signal="pressed" from="Centered/VBC/Options/BTNQuitMain" to="." method="_on_btn_quit_main_pressed"]
+[connection signal="pressed" from="Centered/VBC/Options/BTNQuitDesktop" to="." method="_on_btn_quit_desktop_pressed"]

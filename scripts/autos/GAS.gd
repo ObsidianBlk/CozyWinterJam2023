@@ -13,7 +13,8 @@ const BUS_MASTER : StringName = &"Master"
 const BUS_MUSIC : StringName = &"Music"
 const BUS_SFX : StringName = &"SFX"
 
-const DEFAULT_VOLUME : float = 0.5
+const DEFAULT_VOLUME : float = 1.0
+const DEFAULT_MUSIC_VOLUME : float = 0.2
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -53,11 +54,11 @@ func get_volume(bus_name : StringName) -> float:
 # ------------------------------------------------------------------------------
 func _on_settings_reset() -> void:
 	set_volume(BUS_MASTER, DEFAULT_VOLUME)
-	set_volume(BUS_MUSIC, DEFAULT_VOLUME)
+	set_volume(BUS_MUSIC, DEFAULT_MUSIC_VOLUME)
 	set_volume(BUS_SFX, DEFAULT_VOLUME)
 
 func _on_settings_loaded() -> void:
 	_SetVolume(BUS_MASTER, Settings.get_value(CONFIG_SECTION, BUS_MASTER, DEFAULT_VOLUME))
-	_SetVolume(BUS_MUSIC, Settings.get_value(CONFIG_SECTION, BUS_MUSIC, DEFAULT_VOLUME))
+	_SetVolume(BUS_MUSIC, Settings.get_value(CONFIG_SECTION, BUS_MUSIC, DEFAULT_MUSIC_VOLUME))
 	_SetVolume(BUS_SFX, Settings.get_value(CONFIG_SECTION, BUS_SFX, DEFAULT_VOLUME))
 

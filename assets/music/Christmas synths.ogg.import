@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Christmas synths.ogg-663e693a053304ee7e6560c9
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
