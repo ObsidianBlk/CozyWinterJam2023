@@ -2,6 +2,13 @@ extends UIControl
 
 
 # ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const OBS_ITCH_URI : String = "https://obsidianblk.itch.io/"
+const COZY_ITCH_URI : String = "https://itch.io/jam/cozy-winter-jam-2023"
+
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 @export_category("Main Menu")
@@ -59,3 +66,10 @@ func _on_btn_options_pressed():
 
 func _on_btn_quit_pressed():
 	request(&"quit_application")
+
+
+func _on_btnobs_logo_pressed() -> void:
+	OS.shell_open(OBS_ITCH_URI)
+
+func _on_btn_cozy_pressed() -> void:
+	OS.shell_open(COZY_ITCH_URI)

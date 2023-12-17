@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://ba741r685ojqy"]
+[gd_scene load_steps=8 format=3 uid="uid://ba741r685ojqy"]
 
 [ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_8wcvi"]
 [ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="1_ynmq2"]
 [ext_resource type="FontFile" uid="uid://mvduuji1c2hr" path="res://assets/fonts/Wet Pet.otf" id="3_eq62r"]
+[ext_resource type="Texture2D" uid="uid://dvvs13411vaco" path="res://assets/obs_logos/ObsidianLogo_Small.png" id="4_wal3x"]
+[ext_resource type="Texture2D" uid="uid://bqvrxlp5geh87" path="res://assets/obs_logos/Logo_Open_Small.png" id="5_u11yg"]
+[ext_resource type="Texture2D" uid="uid://dlv1yhu1ryu1v" path="res://assets/obs_logos/Logo_Facing_Small.png" id="6_ul7u0"]
+[ext_resource type="Texture2D" uid="uid://ceddv5lutycls" path="res://assets/obs_logos/Logo_Facing_Bright_Small.png" id="7_sksnr"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -88,6 +92,44 @@ text = "Skate
 Score"
 horizontal_alignment = 1
 
+[node name="OBSLogoMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="BTNOBSLogo" type="TextureButton" parent="OBSLogoMargin"]
+layout_mode = 2
+texture_normal = ExtResource("4_wal3x")
+texture_pressed = ExtResource("5_u11yg")
+texture_hover = ExtResource("6_ul7u0")
+texture_focused = ExtResource("7_sksnr")
+
+[node name="CozyMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="BTNCozy" type="Button" parent="CozyMargin"]
+layout_mode = 2
+text = "   Made for the Cozy Winter Jam 2023   "
+
 [connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Start" to="." method="_on_btn_start_pressed"]
 [connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Options" to="." method="_on_btn_options_pressed"]
 [connection signal="pressed" from="Margin/Center/MenuBox/Options/BTN_Quit" to="." method="_on_btn_quit_pressed"]
+[connection signal="pressed" from="OBSLogoMargin/BTNOBSLogo" to="." method="_on_btnobs_logo_pressed"]
+[connection signal="pressed" from="CozyMargin/BTNCozy" to="." method="_on_btn_cozy_pressed"]

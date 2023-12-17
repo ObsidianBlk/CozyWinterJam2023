@@ -52,6 +52,7 @@ var _point_of_fall : Vector2 = Vector2.ZERO
 @onready var _collision: CollisionShape2D = $Collision
 @onready var _asl_step: AudioStreamLibrary = $ASL_Step
 @onready var _asl_skate: AudioStreamLibrary = $ASL_Skate
+@onready var _audio_fallen: AudioStreamPlayer = $AudioFallen
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -89,6 +90,7 @@ func _physics_process(delta : float) -> void:
 				_collision.disabled = true
 				_point_of_fall = global_position
 				_StopASL()
+				_audio_fallen.play()
 				return
 			
 			_surface = Terrain.Get_Custom_Data_At(global_position, "type", _surface)

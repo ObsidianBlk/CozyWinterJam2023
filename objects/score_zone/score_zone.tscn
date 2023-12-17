@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://3leekrvjngxx"]
+[gd_scene load_steps=5 format=3 uid="uid://3leekrvjngxx"]
 
 [ext_resource type="PackedScene" uid="uid://cvhk6gcq55j0y" path="res://objects/flag/flag.tscn" id="1_gw703"]
 [ext_resource type="Script" path="res://objects/score_zone/score_zone.gd" id="1_n1xyn"]
 [ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="3_c0jyc"]
+[ext_resource type="AudioStream" uid="uid://c4xebby0umq78" path="res://assets/audio/hand-bell.wav" id="4_k35hn"]
 
 [node name="ScoreZone" type="Node2D" groups=["ScoreZone"]]
 script = ExtResource("1_n1xyn")
@@ -21,6 +22,7 @@ polygon = PackedVector2Array(18, 7, 14, 9, -18, -7, -14, -9)
 
 [node name="LBLScore" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 2
 texture_filter = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,5 +38,10 @@ theme_type_variation = &"FieldScoreLabel"
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="APlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_k35hn")
+max_distance = 300.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="TriggerArea" to="." method="_on_trigger_area_body_entered"]

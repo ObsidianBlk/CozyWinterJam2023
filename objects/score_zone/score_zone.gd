@@ -38,6 +38,7 @@ var _animating : bool = false
 @onready var _flag2: StaticBody2D = $Flag2
 @onready var _collision: CollisionPolygon2D = $TriggerArea/Collision
 @onready var _lbl_score: Label = $LBLScore
+@onready var _aplayer: AudioStreamPlayer2D = $APlayer
 
 # ------------------------------------------------------------------------------
 # Setters / Getters
@@ -138,4 +139,5 @@ func _on_trigger_area_body_entered(body: Node2D) -> void:
 	if trigger_group != &"" and not body.is_in_group(trigger_group): return
 	_triggered = true
 	_AnimateScoreLabel()
+	_aplayer.play()
 	triggered.emit(score)

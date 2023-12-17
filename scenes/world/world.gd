@@ -129,7 +129,7 @@ func _TransitionLevel(level_path : String) -> void:
 	await _BlurTo(BLUR_OUT_SIZE, 0.5)
 
 func _EndGame(ui_name : StringName) -> void:
-	print("End Game: ", _transitioning)
+	if _transitioning: return
 	await _BlurTo(BLUR_IN_SIZE, 0.5)
 	await _BackgroundModulate(Color.WHITE, 0.5)
 	_DropActiveLevel()
