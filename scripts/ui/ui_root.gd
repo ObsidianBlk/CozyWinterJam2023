@@ -65,6 +65,10 @@ func show_ui(ui_name : StringName) -> void:
 	_ui[ui_name].show_ui()
 	active_ui_changed.emit(ui_name)
 
+func give_ui_data(ui_name : StringName, data : Dictionary) -> void:
+	if not ui_name in _ui: return
+	_ui[ui_name].set_data(data)
+
 func close_ui() -> void:
 	var active : StringName = get_active_ui()
 	if active == &"": return
@@ -112,6 +116,12 @@ func _on_requested(action : StringName, payload : Dictionary):
 		&"show_ui":
 			if not payload.is_empty() and "ui_name" in payload and typeof(payload["ui_name"]) == TYPE_STRING_NAME:
 				show_ui(payload["ui_name"])
+		&"give_ui_data":
+			if payload.is_empty(): return
+			if not "ui_name" in payload or not "data" in payload: return
+			if typeof(payload["ui_name"]) != TYPE_STRING_NAME or typeof(payload["data"]) != TYPE_DICTIONARY:
+				return
+			give_ui_data(payload["ui_name"], payload["data"])
 		&"close_ui":
 			close_ui()
 		&"close_all":

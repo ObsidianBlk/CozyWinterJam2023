@@ -4,7 +4,8 @@ class_name ScoreboardData
 # ------------------------------------------------------------------------------
 # Signals
 # ------------------------------------------------------------------------------
-
+signal level_added()
+signal entry_added(level_name : String)
 
 # ------------------------------------------------------------------------------
 # Constants and ENUMs
@@ -46,24 +47,14 @@ func _RebuildFrom(e : Array[ScoreboardEntry]) -> void:
 	_edict.clear()
 	_elist.clear()
 	for entry : ScoreboardEntry in e:
-		add_entry(entry)
+		_AddEntry(entry)
+	changed.emit()
 
-# ------------------------------------------------------------------------------
-# Public Methods
-# ------------------------------------------------------------------------------
-func size() -> int:
-	return _elist.size()
-
-func level_count() -> int:
-	return _edict.keys().size()
-
-func level_entry_count(level_name : String) -> int:
-	if not level_name in _edict: return 0
-	return _edict[level_name].size()
-
-func add_entry(entry : ScoreboardEntry) -> void:
-	if entry.score <= 0 or entry.level_name.is_empty() or entry.player_name.is_empty(): return
-	if _elist.find(entry) >= 0: return # Don't add duplicates
+func _AddEntry(entry : ScoreboardEntry) -> int:
+	if entry.score <= 0 or entry.level_name.is_empty() or entry.player_name.is_empty():
+		return ERR_INVALID_DATA
+	if _elist.find(entry) >= 0:
+		return ERR_ALREADY_IN_USE
 	
 	if not entry.level_name in _edict:
 		_edict[entry.level_name] = []
@@ -87,6 +78,33 @@ func add_entry(entry : ScoreboardEntry) -> void:
 	if llist.size() < MAX_ENTRIES_PER_LEVEL:
 		llist.append(entry)
 		_elist.append(entry)
+		return OK
+	# Technically, we should never get here, but let's be SURE
+	return ERR_SCRIPT_FAILED
+
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func size() -> int:
+	return _elist.size()
+
+func level_count() -> int:
+	return _edict.keys().size()
+
+func level_entry_count(level_name : String) -> int:
+	if not level_name in _edict: return 0
+	return _edict[level_name].size()
+
+func add_entry(entry : ScoreboardEntry) -> void:
+	var lcount : int = _edict.size()
+	var res : int = _AddEntry(entry)
+	if res == OK:
+		if _edict.size() > lcount:
+			level_added.emit()
+		entry_added.emit(entry.level_name)
+		changed.emit()
+	elif res == ERR_SCRIPT_FAILED:
+		printerr("ERROR: Failed to properly handle scoreboard entry!")
 
 func get_levels() -> Array:
 	return _edict.keys()
