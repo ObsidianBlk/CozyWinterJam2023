@@ -25,9 +25,10 @@ var _ignore_player_name_changed : bool = false
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
-@onready var _btn_start = %BTN_Start
-@onready var _btn_options = %BTN_Options
+@onready var _btn_start: Button = %BTN_Start
+@onready var _btn_options: Button = %BTN_Options
 @onready var _btn_scoreboard: Button = %BTN_Scoreboard
+@onready var _lbl_version: Label = %LBL_Version
 
 @onready var _edit_player_name: LineEdit = %EDIT_PlayerName
 
@@ -49,6 +50,7 @@ func set_scoreboard_menu(s : StringName) -> void:
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	super._ready()
+	_UpdateVersion()
 	Settings.reset.connect(_on_settings_reset)
 	Settings.loaded.connect(_on_settings_loaded)
 	Settings.value_removed.connect(_on_settings_value_removed)
@@ -73,6 +75,10 @@ func _UpdateAvailableButtons() -> void:
 		_btn_options.visible = option_menu != &""
 	if _btn_scoreboard != null:
 		_btn_scoreboard.visible = scoreboard_menu != &""
+
+func _UpdateVersion() -> void:
+	if _lbl_version != null:
+		_lbl_version.text = ProjectSettings.get_setting("application/config/version", "UNKNOWN")
 
 # ------------------------------------------------------------------------------
 # Handler Methods
