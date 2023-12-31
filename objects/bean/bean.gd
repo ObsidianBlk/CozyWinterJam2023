@@ -48,7 +48,7 @@ var _point_of_fall : Vector2 = Vector2.ZERO
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
-@onready var _direction_indicator = $DirectionIndicator
+@onready var _direction_indicator = %DirectionIndicator
 @onready var _collision: CollisionShape2D = $Collision
 @onready var _asl_step: AudioStreamLibrary = $ASL_Step
 @onready var _asl_skate: AudioStreamLibrary = $ASL_Skate
@@ -117,7 +117,7 @@ func _ProcessVelocitySnow(_delta : float) -> void:
 	if direction.length() <= DIRECTION_THRESHOLD:
 		velocity = Vector2.ZERO
 	else:
-		velocity = _Cart2Iso(direction)
+		velocity = Iso.from_cartesian(direction)
 	move_and_slide()
 
 func _ProcessVelocityIce(delta : float) -> void:
@@ -129,7 +129,7 @@ func _ProcessVelocityIce(delta : float) -> void:
 			velocity = Vector2.ZERO
 	else:
 		var max_speed : float = _GetMaxSpeed()
-		velocity += _Cart2Iso(direction * delta)
+		velocity += Iso.from_cartesian(direction * delta)
 		if velocity.length_squared() > (max_speed * max_speed):
 			velocity = velocity.normalized() * max_speed
 	
@@ -141,7 +141,7 @@ func _ProcessFacing(delta : float) -> void:
 		_facing = wrapf(_facing + (turn_dps * amount * delta), 0.0, 360.0)
 		_direction_indicator.degrees = _facing
 
-func _ProcessSpeed(delta : float) -> void:
+func _ProcessSpeed(_delta : float) -> void:
 	var amount = _axii[INPUT_FORWARD] - _axii[INPUT_BACKWARD]
 	var max_speed : float = _GetMaxSpeed()
 	if abs(amount) <= DIRECTION_THRESHOLD:
@@ -166,10 +166,3 @@ func _PlayASL() -> void:
 func _StopASL() -> void:
 	_asl_skate.stop()
 	_asl_step.stop()
-
-func _Cart2Iso(ccoord : Vector2) -> Vector2:
-	var iso : Vector2 = Vector2(
-		ccoord.x - ccoord.y,
-		(ccoord.x + ccoord.y) * 0.5
-	)
-	return iso

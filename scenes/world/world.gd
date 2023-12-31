@@ -11,6 +11,9 @@ const INITIAL_MUSIC_TRACK : AudioStream = preload("res://assets/music/Christmas 
 const BLUR_IN_SIZE : float = 10.0
 const BLUR_OUT_SIZE : float = 0.0
 
+const SETTINGS_SECTION : String = "Game"
+const SETTINGS_KEY_PLAYERNAME : String = "Player_Name"
+
 # ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
@@ -45,6 +48,7 @@ func _ready() -> void:
 		Settings.request_reset()
 		Settings.save()
 	_InitScoreboard()
+	#_InitScoreboardTest()
 	_music_player.stream = INITIAL_MUSIC_TRACK
 	_music_player.play()
 
@@ -62,6 +66,22 @@ func _unhandled_input(event: InputEvent) -> void:
 # ------------------------------------------------------------------------------
 # Private Methods
 # ------------------------------------------------------------------------------
+func _InitScoreboardTest() -> void:
+	_scoreboard = ScoreboardData.new()
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 100)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 200)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 300)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 125)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 211)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 500)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 315)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 111)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 65)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 99)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 418)
+	_scoreboard.create_entry("Dummy Level", "The Nerd Man", 313)
+	_ui.give_ui_data(&"Scoreboard", {"scoreboard":_scoreboard})
+
 func _InitScoreboard() -> void:
 	if not ResourceLoader.exists(SCOREBOARD_RESOURCE_PATH):
 		_scoreboard = ScoreboardData.new()
@@ -72,6 +92,7 @@ func _InitScoreboard() -> void:
 			printerr("ERROR: Failed to load scoreboard file!")
 			_scoreboard = ScoreboardData.new()
 			_SaveScoreboard()
+	_ui.give_ui_data(&"Scoreboard", {"scoreboard":_scoreboard})
 
 func _SaveScoreboard() -> void:
 	if _scoreboard == null: return
@@ -167,13 +188,19 @@ func _BlurTo(size : float, duration : float) -> void:
 func _on_level_complete(score : int) -> void:
 	if _active_level == null: return
 	if score > 0:
-		var score_entry : ScoreboardEntry = ScoreboardEntry.new()
-		score_entry.level_name = _active_level.level_name
-		score_entry.player_name = "Player" # TODO: Change this, obviously!
-		score_entry.score = score
-		_scoreboard.add_entry(score_entry)
+		#var score_entry : ScoreboardEntry = ScoreboardEntry.new()
+		_scoreboard.create_entry(
+			_active_level.level_name,
+			Settings.get_value(SETTINGS_SECTION, SETTINGS_KEY_PLAYERNAME, Settings.DEFAULT_PLAYER_NAME),
+			score
+		)
+		#score_entry.level_name = _active_level.level_name
+		#score_entry.player_name = Settings.get_value(SETTINGS_SECTION, SETTINGS_KEY_PLAYERNAME, Settings.DEFAULT_PLAYER_NAME)
+		#score_entry.score = score
+		#_scoreboard.add_entry(score_entry)
 		_SaveScoreboard()
-	_EndGame(&"MainMenu")
+		_ui.give_ui_data(&"Scoreboard", {"level":_active_level.level_name})
+	_EndGame(&"Scoreboard")
 
 func _on_requested(action : StringName, payload : Dictionary = {}):
 	if _transitioning: return
@@ -198,5 +225,7 @@ func _on_requested(action : StringName, payload : Dictionary = {}):
 			_ui.close_all()
 			_EndGame(&"MainMenu")
 		&"quit_application":
+			if Settings.is_dirty():
+				Settings.save()
 			get_tree().quit()
 

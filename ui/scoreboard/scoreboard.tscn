@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cu7aq68t14ym3"]
+[gd_scene load_steps=5 format=3 uid="uid://cu7aq68t14ym3"]
 
 [ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="1_jgon3"]
 [ext_resource type="Script" path="res://ui/scoreboard/scoreboard.gd" id="2_fi132"]
+[ext_resource type="PackedScene" uid="uid://etg0itluv44l" path="res://ui/scoreboard/score_entry/score_entry.tscn" id="3_45q1t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhr7c"]
+content_margin_left = 12.0
+content_margin_top = 24.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 0.784314)
+border_width_left = 4
+border_width_right = 4
+border_color = Color(0.776471, 0.313726, 0.27451, 1)
+border_blend = true
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="Scoreboard" type="Control"]
 layout_mode = 3
@@ -23,6 +37,7 @@ grow_vertical = 2
 
 [node name="VBC" type="VBoxContainer" parent="CC"]
 layout_mode = 2
+theme_override_constants/separation = -5
 
 [node name="Titlebar" type="PanelContainer" parent="CC/VBC"]
 layout_mode = 2
@@ -61,17 +76,66 @@ layout_mode = 2
 text = ">>"
 
 [node name="Body" type="PanelContainer" parent="CC/VBC"]
+show_behind_parent = true
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lhr7c")
 
 [node name="Layout" type="VBoxContainer" parent="CC/VBC/Body"]
 layout_mode = 2
+theme_override_constants/separation = 24
 
 [node name="EntryContainer" type="VBoxContainer" parent="CC/VBC/Body/Layout"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="CC/VBC/Body/Layout"]
+[node name="Entry_01" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Entry_02" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 1
+
+[node name="Entry_03" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 2
+
+[node name="Entry_04" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 3
+
+[node name="Entry_05" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 4
+
+[node name="Entry_06" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 5
+
+[node name="Entry_07" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 6
+
+[node name="Entry_08" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 7
+
+[node name="Entry_09" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 8
+
+[node name="Entry_10" parent="CC/VBC/Body/Layout/EntryContainer" instance=ExtResource("3_45q1t")]
+unique_name_in_owner = true
+layout_mode = 2
+index = 9
 
 [node name="Buttons" type="HBoxContainer" parent="CC/VBC/Body/Layout"]
 layout_mode = 2
@@ -88,3 +152,8 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "To Level Select"
+
+[connection signal="pressed" from="CC/VBC/Titlebar/Layout/LevelSelect/BTNPrevLevel" to="." method="_on_btn_prev_level_pressed"]
+[connection signal="pressed" from="CC/VBC/Titlebar/Layout/LevelSelect/BTNNextLevel" to="." method="_on_btn_next_level_pressed"]
+[connection signal="pressed" from="CC/VBC/Body/Layout/Buttons/BTNMainMenu" to="." method="_on_btn_main_menu_pressed"]
+[connection signal="pressed" from="CC/VBC/Body/Layout/Buttons/BTNLevelSelect" to="." method="_on_btn_level_select_pressed"]

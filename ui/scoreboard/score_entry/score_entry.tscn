@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://etg0itluv44l"]
+
+[ext_resource type="Theme" uid="uid://cpf26i80lbj8g" path="res://assets/game.theme" id="1_detlf"]
+[ext_resource type="Script" path="res://ui/scoreboard/score_entry/score_entry.gd" id="1_e2r51"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywecl"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 4
+border_color = Color(0.776471, 0.313726, 0.27451, 1)
+border_blend = true
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ScoreEntry" type="MarginContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme = ExtResource("1_detlf")
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("1_e2r51")
+
+[node name="VBC" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LabelLayout" type="HBoxContainer" parent="VBC"]
+layout_mode = 2
+
+[node name="LBL_Index" type="Label" parent="VBC/LabelLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.901961, 0.572549, 0.541176, 1)
+theme_override_colors/font_outline_color = Color(0.764706, 0.835294, 0.780392, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "00"
+
+[node name="LBL_Player" type="Label" parent="VBC/LabelLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HUDLabelSmall"
+text = "Someone Special"
+
+[node name="LBL_Score" type="Label" parent="VBC/LabelLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_type_variation = &"FieldScoreLabel"
+text = "0000"
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBC"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_ywecl")
